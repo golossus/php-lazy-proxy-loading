@@ -1,0 +1,35 @@
+{
+    "name": "golossus/php-lazy-proxy-loading",
+    "description": "Provides a proxy class factory to load services in a lazy and seamless way",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "php",
+        "lazy",
+        "loading",
+        "laravel",
+        "proxy"
+    ],
+    "authors": [
+        {"name": "Santiago Garcia Belmonte", "email": "sangarbe@gmail.com"},
+        {"name": "Jorge Brisa Ibañez", "email": "jorge.br.ib@gmail.com"}
+    ],
+    "require": {
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Golossus\\LazyProxyLoading\\": "lib"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Golossus\\LazyProxyLoading\\Tests\\": "tests"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
