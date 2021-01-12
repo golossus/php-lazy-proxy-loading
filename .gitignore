@@ -1,5 +1,7 @@
 .DS_Store
 .git-authors
 .phpunit.result.cache
+.php_cs.cache
+.php_cs
 composer.lock
 /vendor/

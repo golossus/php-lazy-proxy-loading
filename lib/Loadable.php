@@ -1,15 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Golossus\LazyProxyLoading;
 
 /**
- * Interface Bootable
- * @package Golossus\LazyProxyLoading
+ * Interface Bootable.
  */
 interface Loadable
 {
-    /**
-     * @return bool
-     */
     public function isLoaded(): bool;
 }

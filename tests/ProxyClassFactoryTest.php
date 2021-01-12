@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Golossus\LazyProxyLoading\Tests;
 
@@ -18,32 +20,31 @@ class ProxyClassFactoryTest extends TestCase
 
         $proxy->noReturnType();
         $this->assertEquals('noReturnType', $proxy::$method);
-        $this->assertEquals(null, $proxy::$input);
+        $this->assertNull($proxy::$input);
 
         $proxy->voidReturnType();
         $this->assertEquals('voidReturnType', $proxy::$method);
-        $this->assertEquals(null, $proxy::$input);
+        $this->assertNull($proxy::$input);
 
         $output = $proxy->nullableBuiltInReturnType();
         $this->assertEquals('nullableBuiltInReturnType', $proxy::$method);
-        $this->assertEquals(null, $proxy::$input);
+        $this->assertNull($proxy::$input);
         $this->assertEquals($output, 1);
 
         $output = $proxy->notNullableBuiltInReturnType();
         $this->assertEquals('notNullableBuiltInReturnType', $proxy::$method);
-        $this->assertEquals(null, $proxy::$input);
+        $this->assertNull($proxy::$input);
         $this->assertEquals($output, true);
 
         $output = $proxy->notNullableNotBuiltInReturnType();
         $this->assertEquals('notNullableNotBuiltInReturnType', $proxy::$method);
-        $this->assertEquals(null, $proxy::$input);
+        $this->assertNull($proxy::$input);
         $this->assertEquals($output, new Dummy());
 
         $output = $proxy->nullableNotBuiltInReturnType();
         $this->assertEquals('nullableNotBuiltInReturnType', $proxy::$method);
-        $this->assertEquals(null, $proxy::$input);
+        $this->assertNull($proxy::$input);
         $this->assertEquals($output, new Dummy());
-
 
         $proxy->noTypeHintingParamType(10);
         $this->assertEquals('noTypeHintingParamType', $proxy::$method);
@@ -51,11 +52,11 @@ class ProxyClassFactoryTest extends TestCase
 
         $proxy->nullableBuiltInParamType(null);
         $this->assertEquals('nullableBuiltInParamType', $proxy::$method);
-        $this->assertEquals(null, $proxy::$input);
+        $this->assertNull($proxy::$input);
 
         $proxy->notNullableBuiltInParamType(true);
         $this->assertEquals('notNullableBuiltInParamType', $proxy::$method);
-        $this->assertEquals(true, $proxy::$input);
+        $this->assertTrue($proxy::$input);
 
         $proxy->notNullableNotBuiltInParamType(new Dummy());
         $this->assertEquals('notNullableNotBuiltInParamType', $proxy::$method);
@@ -63,11 +64,11 @@ class ProxyClassFactoryTest extends TestCase
 
         $proxy->nullableNotBuiltInParamType(null);
         $this->assertEquals('nullableNotBuiltInParamType', $proxy::$method);
-        $this->assertEquals(null, $proxy::$input);
+        $this->assertNull($proxy::$input);
 
         $proxy->nullableDefaultParamType();
         $this->assertEquals('nullableDefaultParamType', $proxy::$method);
-        $this->assertEquals(null, $proxy::$input);
+        $this->assertNull($proxy::$input);
 
         $proxy->notNullableDefaultParamType();
         $this->assertEquals('notNullableDefaultParamType', $proxy::$method);
@@ -75,7 +76,7 @@ class ProxyClassFactoryTest extends TestCase
 
         $proxy->paramList(10, null, true, new Dummy(), null, new Dummy());
         $this->assertEquals('paramList', $proxy::$method);
-        $this->assertEquals([
+        $this->assertEquals(array(
             10,
             null,
             true,
@@ -83,7 +84,7 @@ class ProxyClassFactoryTest extends TestCase
             null,
             new Dummy(),
             10,
-        ], $proxy::$input);
+        ), $proxy::$input);
 
         $callable = function () {
             return 10;
@@ -91,6 +92,5 @@ class ProxyClassFactoryTest extends TestCase
         $proxy->withCallableParameter($callable);
         $this->assertEquals('withCallableParameter', $proxy::$method);
         $this->assertEquals($callable(), ($proxy::$input)());
-
     }
 }

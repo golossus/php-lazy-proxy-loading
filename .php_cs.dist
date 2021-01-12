@@ -1,0 +1,23 @@
+<?php declare(strict_types = 1);
+
+return PhpCsFixer\Config::create()
+    ->setRules(
+        [
+            '@Symfony' => true,
+            '@Symfony:risky' => true,
+            'array_syntax' => ['syntax' => 'long'],
+            'ordered_imports' => true,
+            'protected_to_private' => false,
+            'native_function_invocation' => [
+                'include' => ['@compiler_optimized'],
+                'scope' => 'namespaced',
+            ],
+        ]
+    )
+    ->setRiskyAllowed(true)
+    ->setFinder(
+        PhpCsFixer\Finder::create()
+            ->files()
+            ->in(__DIR__.'/lib')
+            ->in(__DIR__.'/tests')
+    );

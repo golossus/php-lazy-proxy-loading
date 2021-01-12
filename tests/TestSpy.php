@@ -1,7 +1,8 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Golossus\LazyProxyLoading\Tests;
-
 
 class TestSpy
 {
@@ -52,12 +53,10 @@ class TestSpy
         return new Dummy();
     }
 
-
     public function noTypeHintingParamType($value)
     {
         static::setVars('noTypeHintingParamType', $value);
     }
-
 
     public function nullableBuiltInParamType(?int $value)
     {
@@ -91,11 +90,11 @@ class TestSpy
 
     public function paramList($value1, ?int $value2, bool $value3, Dummy $value4, ?Dummy $value5, ?Dummy $value6 = null, int $value7 = 10)
     {
-        static::setVars('paramList', func_get_args());
+        static::setVars('paramList', \func_get_args());
     }
 
-    public function withCallableParameter(callable $param){
+    public function withCallableParameter(callable $param)
+    {
         static::setVars('withCallableParameter', $param);
     }
-    
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Golossus\LazyProxyLoading;
 
@@ -11,9 +13,8 @@ use ReflectionParameter;
 class ProxyClassFactory
 {
     /**
-     * @param string  $className
-     * @param Closure $classFactoryCallback
      * @return Loadable
+     *
      * @throws ReflectionException
      */
     public static function create(string $className, Closure $classFactoryCallback)
@@ -25,7 +26,7 @@ class ProxyClassFactory
             private $classFactoryCallback;
 
             private $className;
-            
+
             private $loaded;
 
             public function __construct(string $className, \Closure $classFactoryCallback) {
@@ -33,12 +34,12 @@ class ProxyClassFactory
                 $this->closure = $classFactoryCallback;
                 $this->loaded = false;
             }
-            
+
             public function isLoaded(): bool
             {
                 return $this->loaded;
             }
-            
+
             %s
         };';
 
@@ -53,35 +54,28 @@ class ProxyClassFactory
         eval($proxyStringClass);
 
         return $proxy;
-
     }
 
     /**
-     * @param array $methods
-     *
-     * @return string
-     *
      * @throws ReflectionException
      */
     private static function buildMethods(array $methods): string
     {
-        $publicStringMethods = [];
+        $publicStringMethods = array();
         foreach ($methods as $method) {
-            if (strpos($method->getName(), '__') !== false) {
+            if (false !== strpos($method->getName(), '__')) {
                 continue;
             }
 
             $methodName = $method->getName();
             $parameters = $method->getParameters();
 
-            $stringParameters = [];
-            $parametersWithoutType = [];
+            $stringParameters = array();
+            $parametersWithoutType = array();
             foreach ($parameters as $parameter) {
-
                 $type = self::buildParameterType($parameter);
                 $parameterName = $parameter->getName();
                 $defaultValue = self::buildParameterDefaultValue($parameter);
-
 
                 $stringParameters[] = sprintf('%s $%s %s', $type, $parameterName, $defaultValue);
                 $parametersWithoutType[] = sprintf('$%s', $parameterName);
@@ -98,22 +92,17 @@ class ProxyClassFactory
                 $methodName,
                 implode(',', $stringParameters),
                 $returnType,
-                self::methodShouldReturn($returnType)? 'return' : '',
+                self::methodShouldReturn($returnType) ? 'return' : '',
                 $methodName,
-                implode(',',$parametersWithoutType)
+                implode(',', $parametersWithoutType)
             );
         }
 
         return implode("\n", $publicStringMethods);
     }
 
-    /**
-     * @param ReflectionParameter $parameter
-     * @return string
-     */
     private static function buildParameterType(ReflectionParameter $parameter): string
     {
-
         if (!$parameter->hasType()) {
             return '';
         }
@@ -133,8 +122,6 @@ class ProxyClassFactory
     }
 
     /**
-     * @param ReflectionParameter $parameter
-     * @return string
      * @throws ReflectionException
      */
     private static function buildParameterDefaultValue(ReflectionParameter $parameter): string
@@ -157,7 +144,6 @@ class ProxyClassFactory
 
     private static function buildMethodReturnType(ReflectionMethod $method): string
     {
-
         if (!$method->hasReturnType()) {
             return '';
         }
@@ -176,8 +162,8 @@ class ProxyClassFactory
         return $returnType;
     }
 
-    private static function methodShouldReturn(string $returnType){
-        return $returnType !== ':void';
-
+    private static function methodShouldReturn(string $returnType)
+    {
+        return ':void' !== $returnType;
     }
 }

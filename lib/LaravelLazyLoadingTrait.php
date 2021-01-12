@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Golossus\LazyProxyLoading;
 
@@ -8,22 +10,17 @@ use ReflectionException;
 trait LaravelLazyLoadingTrait
 {
     /**
-     * @param string  $className
-     * @param Closure $classFactoryCallback
-     *
-     * @return array
-     *
      * @throws ReflectionException
      */
-    function lazy(string $className, Closure $classFactoryCallback): array
+    public function lazy(string $className, Closure $classFactoryCallback): array
     {
-       $proxy = ProxyClassFactory::create($className, $classFactoryCallback);
+        $proxy = ProxyClassFactory::create($className, $classFactoryCallback);
 
-        return [
+        return array(
             $className,
             function () use ($proxy) {
                 return $proxy;
             },
-        ];
+        );
     }
 }
