@@ -63,7 +63,7 @@ class ProxyClassFactory
     {
         $publicStringMethods = array();
         foreach ($methods as $method) {
-            if (false !== strpos($method->getName(), '__')) {
+            if (false !== strpos($method->getName(), '__construct')) {
                 continue;
             }
 
@@ -132,7 +132,14 @@ class ProxyClassFactory
 
         $defaultValue = '=';
         if ($parameter->isDefaultValueConstant()) {
-            $defaultValue .= '\\'.$parameter->getDefaultValueConstantName();
+            $defaultValueConstantName = $parameter->getDefaultValueConstantName();
+            list($type) = explode('::', $defaultValueConstantName);
+
+            if (!\in_array($type, array('self', 'static'))) {
+                $defaultValue .= '\\';
+            }
+
+            $defaultValue .= $defaultValueConstantName;
 
             return $defaultValue;
         }

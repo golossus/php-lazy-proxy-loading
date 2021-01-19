@@ -6,95 +6,121 @@ namespace Golossus\LazyProxyLoading\Tests;
 
 class TestSpy
 {
-    public static $method;
-    public static $input;
+    const SOME_VALUE = 'self-value';
 
-    private static function setVars($method, $input = null)
+    /**
+     * @var InstanceSpy
+     */
+    private $instanceSpy;
+
+    /**
+     * TestSpy constructor.
+     */
+    public function __construct(InstanceSpy $instanceSpy)
     {
-        static::$method = $method;
-        static::$input = $input;
+        $this->instanceSpy = $instanceSpy;
     }
 
     public function noReturnType()
     {
-        static::setVars('noReturnType');
+        $this->instanceSpy->setVars('noReturnType');
     }
 
     public function voidReturnType(): void
     {
-        static::setVars('voidReturnType');
+        $this->instanceSpy->setVars('voidReturnType');
     }
 
     public function nullableBuiltInReturnType(): ?int
     {
-        static::setVars('nullableBuiltInReturnType');
+        $this->instanceSpy->setVars('nullableBuiltInReturnType');
 
         return 1;
     }
 
     public function notNullableBuiltInReturnType(): bool
     {
-        static::setVars('notNullableBuiltInReturnType');
+        $this->instanceSpy->setVars('notNullableBuiltInReturnType');
 
         return true;
     }
 
     public function notNullableNotBuiltInReturnType(): Dummy
     {
-        static::setVars('notNullableNotBuiltInReturnType');
+        $this->instanceSpy->setVars('notNullableNotBuiltInReturnType');
 
         return new Dummy();
     }
 
     public function nullableNotBuiltInReturnType(): ?Dummy
     {
-        static::setVars('nullableNotBuiltInReturnType');
+        $this->instanceSpy->setVars('nullableNotBuiltInReturnType');
 
         return new Dummy();
     }
 
     public function noTypeHintingParamType($value)
     {
-        static::setVars('noTypeHintingParamType', $value);
+        $this->instanceSpy->setVars('noTypeHintingParamType', $value);
     }
 
     public function nullableBuiltInParamType(?int $value)
     {
-        static::setVars('nullableBuiltInParamType', $value);
+        $this->instanceSpy->setVars('nullableBuiltInParamType', $value);
     }
 
     public function notNullableBuiltInParamType(bool $value)
     {
-        static::setVars('notNullableBuiltInParamType', $value);
+        $this->instanceSpy->setVars('notNullableBuiltInParamType', $value);
     }
 
     public function notNullableNotBuiltInParamType(Dummy $value)
     {
-        static::setVars('notNullableNotBuiltInParamType', $value);
+        $this->instanceSpy->setVars('notNullableNotBuiltInParamType', $value);
     }
 
     public function nullableNotBuiltInParamType(?Dummy $value)
     {
-        static::setVars('nullableNotBuiltInParamType', $value);
+        $this->instanceSpy->setVars('nullableNotBuiltInParamType', $value);
     }
 
     public function nullableDefaultParamType(?Dummy $juan = null)
     {
-        static::setVars('nullableDefaultParamType', $juan);
+        $this->instanceSpy->setVars('nullableDefaultParamType', $juan);
     }
 
     public function notNullableDefaultParamType(int $value = 10)
     {
-        static::setVars('notNullableDefaultParamType', $value);
+        $this->instanceSpy->setVars('notNullableDefaultParamType', $value);
+    }
+
+    public function notNullableExternalConstantDefaultParamType(string $value = Dummy::SOME_VALUE)
+    {
+        $this->instanceSpy->setVars('notNullableExternalConstantDefaultParamType', $value);
+    }
+
+    public function notNullableSelfConstantDefaultParamType(string $value = self::SOME_VALUE)
+    {
+        $this->instanceSpy->setVars('notNullableSelfConstantDefaultParamType', $value);
     }
 
     public function paramList($value1, ?int $value2, bool $value3, Dummy $value4, ?Dummy $value5, ?Dummy $value6 = null, int $value7 = 10)
     {
-        static::setVars('paramList', \func_get_args());
+        $this->instanceSpy->setVars('paramList', \func_get_args());
     }
 
     public function withCallableParameter(callable $param)
     {
-        static::setVars('withCallableParameter', $param);
+        $this->instanceSpy->setVars('withCallableParameter', $param);
+    }
+
+    public function __invoke()
+    {
+        $this->instanceSpy->setVars('__invoke');
+    }
+
+    public function __clone()
+    {
+        $this->instanceSpy->setVars('__clone');
     }
 }
