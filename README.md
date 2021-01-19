@@ -1,5 +1,9 @@
 [![Build Status](https://api.travis-ci.org/golossus/php-lazy-proxy-loading.svg?branch=main)](https://api.travis-ci.org/golossus/php-lazy-proxy-loading)
 [![codecov](https://codecov.io/gh/golossus/php-lazy-proxy-loading/branch/main/graph/badge.svg?token=6ZFJDNPL4S)](https://codecov.io/gh/golossus/php-lazy-proxy-loading)
+[![Version](https://poser.pugx.org/golossus/php-lazy-proxy-loading/version)](//packagist.org/packages/golossus/php-lazy-proxy-loading)
+[![Total Downloads](https://poser.pugx.org/golossus/php-lazy-proxy-loading/downloads)](//packagist.org/packages/golossus/php-lazy-proxy-loading)
+[![License](https://poser.pugx.org/golossus/php-lazy-proxy-loading/license)](//packagist.org/packages/golossus/php-lazy-proxy-loading)
+
 
 <p align="center">
     <a href="https://www.golossus.com" target="_blank">
